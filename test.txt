@@ -1,0 +1,5 @@
+multiplier = 24
+
+function demo (a) 
+num = a * multiplier
+end
