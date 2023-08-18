@@ -24,21 +24,25 @@ namespace Scripting {
 	}
 
 	LuaScript::LuaScript(const std::string& file) {
-		std::ifstream ifs { file };
-		std::stringstream content {};
-		content << ifs.rdbuf();
+		source = file;
+		Reload();
+	}
+	LuaScript::~LuaScript() {
+		lua_close(state);
+	}
 
+	void LuaScript::Reload() {
+
+		std::ifstream ifs { source };
+		std::stringstream content {};
+
+		content << ifs.rdbuf();
 		state = luaL_newstate();
 		luaL_openlibs(state);
 		luaL_loadbuffer(state, content.str().c_str(), content.str().length(), "CONTENT");
 		lua_pcall(state, 0, 0, 0);
 		arguments = returns = 0;
 	}
-
-	LuaScript::~LuaScript() {
-		lua_close(state);
-	}
-
 
 	template <>
 	float LuaScript::GetTableElement<float>(const std::string& name) {

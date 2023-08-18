@@ -42,6 +42,7 @@ namespace Scripting {
 
 	class LuaScript {
 	private:
+		std::string source;
 		lua_State* state;
 
 		int arguments;
@@ -73,6 +74,8 @@ namespace Scripting {
 
 		LuaScript(const std::string& file);
 		~LuaScript();
+
+		void Reload();
 
 		template <typename T>
 		void SetVariable(const std::string& name, const T& value) {

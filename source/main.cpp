@@ -3,14 +3,14 @@
 
 int main(void) {
 
-	float num = 24;
+	int num = 1095;
 
 	Scripting::BoundScript script{ "test.txt" };
 
 	script.SetVariable("multiplier", 2);
 	
 	script.BindVariable(num, "num");
-	script.PushArgument(1.4f);
+	script.PushArgument(19);
 	script.CallFunction("demo");
 	std::cout << num;
 }
