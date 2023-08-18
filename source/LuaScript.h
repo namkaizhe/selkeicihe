@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "LuaLibrary.h"
 
 namespace Scripting {
 
@@ -35,6 +36,9 @@ namespace Scripting {
 	public:
 		virtual void MirrorToScript() override;
 		virtual void MirrorToEngine() override;
+		T* Get() {
+			return variable;
+		};
 
 		ScriptVariable(BoundScript& script, T& variable, const std::string& name) : ScriptVariableBase(script, name), variable(&variable)  {
 		}
@@ -48,28 +52,6 @@ namespace Scripting {
 		int arguments;
 		int returns;
 
-		std::string LeafMember(const std::string& name) {
-			if (name.find('.') == std::string::npos) return name;
-			return name.substr(name.find_last_of('.') + 1);
-		}
-
-		// All helper functions return the change in stack size.
-		int PushVariable(const std::string& name);
-
-		int PushContainingTable(std::string name);
-
-		template <typename T>
-		T GetTableElement(const std::string& name);
-
-		template <typename T>
-		void SetTableElement(const std::string& name, const T& value);
-
-		template <typename T>
-		void PushValue(const T& value);
-
-		template <typename T>
-		T PopValue();
-
 	public:
 
 		LuaScript(const std::string& file);
@@ -79,24 +61,24 @@ namespace Scripting {
 
 		template <typename T>
 		void SetVariable(const std::string& name, const T& value) {
-			SetTableElement(name, value);
+			SetTableElement(state, name, value);
 		}
 
 		template <typename T>
 		T GetVariable(const std::string& name) {
-			return GetTableElement<T>(name);
+			return GetTableElement<T>(state, name);
 		}
 
 		template <typename T>
 		void PushArgument(T argument) {
 			if (returns > 0) lua_pop(state, returns);
 			returns = 0;
-			PushValue(argument);
+			PushValue(state, argument);
 			++arguments;
 		};
 
 		virtual void CallFunction(const std::string& name, int returns = 0) {
-			PushVariable(name);
+			PushVariable(state, name);
 			lua_rotate(state, - arguments - 1, 1);
 			lua_pcall(state, arguments, returns, 0);
 			arguments = 0;

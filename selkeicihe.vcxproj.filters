@@ -21,7 +21,10 @@
     <ClInclude Include="source\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Scripting.h">
+    <ClInclude Include="source\AttachedScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LuaLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -30,6 +33,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\LuaScript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LuaLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

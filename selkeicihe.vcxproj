@@ -137,11 +137,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\LuaLibrary.h" />
     <ClInclude Include="source\LuaScript.h" />
     <ClInclude Include="source\Object.h" />
-    <ClInclude Include="source\Scripting.h" />
+    <ClInclude Include="source\AttachedScript.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\LuaLibrary.cpp" />
     <ClCompile Include="source\LuaScript.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
